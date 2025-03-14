@@ -5,11 +5,23 @@
 package practica.gui;
 
 import javax.swing.JFrame;
+import practica.game.Tablero;
 
 /**
  * Esta clase será un JFrame y funcionará como el contenedor del tablero
  * @author cxz03
  */
-public class Ventana extends JFrame{
+public class Ventana extends JFrame {
+    private static final String TITULO = "ROMPECABEZAS";
     
+    public Ventana() {
+        this.iniciarlizarComponentes();
+        this.setTitle(TITULO);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);   // después del método pack() para que se coloque al centro después de ajustar el tamaño de la ventana.
+    }
+    private void iniciarlizarComponentes() {
+        this.add(new Tablero(3, 3));
+    }
 }
