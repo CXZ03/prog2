@@ -4,3 +4,5 @@ repositorio para la práctica de programación 2 2025.
 - David
 - Xiaozhe
 # To do
+- [ ] documentación latex
+- [ ] proyecto netbens
