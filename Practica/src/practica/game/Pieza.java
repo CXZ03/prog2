@@ -22,8 +22,9 @@ public class Pieza extends JPanel{
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, BORDER_WIDTH));
     }
     
-    public void setImage(Image subImage){
+    public void ponerImagen(Image subImage){
         this.subImagen = subImage;
+        this.repaint();
     }
     
     @Override

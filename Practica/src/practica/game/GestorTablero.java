@@ -4,10 +4,75 @@
  */
 package practica.game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 /**
  *
  * @author cxz03
  */
-public class GestorTablero {
+public class GestorTablero implements ActionListener, KeyListener{
+    Tablero tablero;
+    public GestorTablero(Tablero tablero){
+        this.tablero = tablero;
+    }
     
+    private void gestionarTeclaW(){
+        
+    }
+    
+    private void gestionarTeclaA(){
+        
+    }
+    
+    private void gestionarTeclaS() {
+        
+    }
+    
+    private void gestionarTeclaD() {
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyChar()) {
+            case 'w':
+            case 'W':
+                System.out.println("---> DEBUG: key pressed 'w'");
+                this.gestionarTeclaW();
+                break;
+            case 'a':
+            case 'A':
+                System.out.println("---> DEBUG: key pressed 'a'");
+                this.gestionarTeclaA();
+                break;
+            case 's':
+            case 'S':
+                System.out.println("---> DEBUG: key pressed 's'");
+                this.gestionarTeclaS();
+                break;
+            case 'd':
+            case 'D':
+                System.out.println("---> DEBUG: key pressed 'd'");
+                this.gestionarTeclaD();
+                break;
+            default:
+                System.out.println("---> DEBUG: key pressed <SIN ASIGNAR>");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 }
