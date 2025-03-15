@@ -32,6 +32,8 @@ public class Tablero extends JPanel {
     private String directorioImagen = "src/resources/linux-penguin.png";
     private String directorioImagenPuntoJugador = "src/resources/player-point.png";
     private Pieza piezas[][];
+    private int xPuntoJugador = 0;
+    private int yPuntoJugador = 0;
 
     public Tablero(int nPiezaHorizontal, int nPiezaVertical) {
         this.setPreferredSize(new Dimension(ANCHO, ALTO));
@@ -41,8 +43,65 @@ public class Tablero extends JPanel {
         this.iniciarGestorTablero();
     }
 
+    public void moverHaciaArriba() {
+        int yDestino = yPuntoJugador - 1;
+        try {
+            intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
+        } catch (ExcepcionPuntoFueraDelTablero ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        }
+        yPuntoJugador = yDestino;
+    }
+
+    public void moverHaciaIzquierda() {
+        int xDestino = xPuntoJugador - 1;
+        try {
+            intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
+        } catch (ExcepcionPuntoFueraDelTablero ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        }
+        xPuntoJugador = xDestino;
+    }
+
+    public void moverHaciaAbajo() {
+        int yDestino = yPuntoJugador + 1;
+        try {
+            intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
+        } catch (ExcepcionPuntoFueraDelTablero ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        }
+        yPuntoJugador = yDestino;
+    }
+
+    public void moverHaciaDerecha() {
+        int xDestino = xPuntoJugador + 1;
+        try {
+            intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
+        } catch (ExcepcionPuntoFueraDelTablero ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;     // Eearly return para evitar actualizar la posición del jugador
+        }
+        xPuntoJugador = xDestino;
+
+    }
+
     // Métodos sobre los movimientos de las piezas
-    public void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) throws ExcepcionPuntoFueraDelTablero, ExcepcionMovimientoIlegal {
+    private void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) throws ExcepcionPuntoFueraDelTablero, ExcepcionMovimientoIlegal {
         // Miramos que el punto origen esté dentro del tablero
         if ((xOrigen < 0) || (xOrigen >= piezas.length) || (yOrigen < 0) || (yDestino >= piezas[0].length)) {
             throw new ExcepcionPuntoFueraDelTablero("Error: Tablero.java -> intercambiarPieza() -> punto origen fuera del tablero");
@@ -56,7 +115,7 @@ public class Tablero extends JPanel {
             throw new ExcepcionMovimientoIlegal("Error: Tablero.java -> intercambiarPieza() -> movimiento ilegal");
         }
         // Hacemos el intercambio de piezas
-        
+
         Image tmp = piezas[xOrigen][yOrigen].getSubImagen();
         piezas[xOrigen][yOrigen].ponerImagen(piezas[xDestino][yDestino].getSubImagen());
         piezas[xDestino][yDestino].ponerImagen(tmp);

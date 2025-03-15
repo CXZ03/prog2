@@ -33,6 +33,7 @@ public class Pieza extends JPanel{
     
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);    // Limpia el fondo para poner el nuevo imagen
         g.drawImage(subImagen, 0, 0, this);
     }
 }

@@ -20,19 +20,19 @@ public class GestorTablero implements ActionListener, KeyListener{
     }
     
     private void gestionarTeclaW(){
-        
+        tablero.moverHaciaArriba();
     }
     
     private void gestionarTeclaA(){
-        
+        tablero.moverHaciaIzquierda();
     }
     
     private void gestionarTeclaS() {
-        
+        tablero.moverHaciaAbajo();
     }
     
     private void gestionarTeclaD() {
-        
+        tablero.moverHaciaDerecha();
     }
 
     @Override
