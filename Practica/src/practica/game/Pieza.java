@@ -27,6 +27,10 @@ public class Pieza extends JPanel{
         this.repaint();
     }
     
+    public Image getSubImagen(){
+        return this.subImagen;
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         g.drawImage(subImagen, 0, 0, this);

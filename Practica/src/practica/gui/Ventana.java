@@ -4,7 +4,11 @@
  */
 package practica.gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import practica.exceptions.ExcepcionMovimientoIlegal;
+import practica.exceptions.ExcepcionPuntoFueraDelTablero;
 import practica.game.Tablero;
 
 /**
@@ -29,6 +33,13 @@ public class Ventana extends JFrame {
     }
     private void iniciarlizarComponentes() {
         this.add(tablero);
+        try {
+            tablero.intercambiarPieza(0, 0, 0, 1);
+        } catch (ExcepcionPuntoFueraDelTablero ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExcepcionMovimientoIlegal ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void inicarTablero(int nPiezaHorizontal, int nPiezaVertical) {
