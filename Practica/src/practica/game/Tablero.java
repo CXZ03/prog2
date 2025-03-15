@@ -36,8 +36,8 @@ public class Tablero extends JPanel {
     }
 
     private void inicializarComponentes() {
-        for (int j = 0; j < piezas.length; j++) {
-            for (int i = 0; i < piezas[0].length; i++) {
+        for (int j = 0; j < piezas[0].length; j++) {
+            for (int i = 0; i < piezas.length; i++) {
                 this.add(piezas[i][j]);
             }
         }

@@ -13,15 +13,25 @@ import practica.game.Tablero;
  */
 public class Ventana extends JFrame {
     private static final String TITULO = "ROMPECABEZAS";
+    private Tablero tablero;
+    private int nPiezaHorizontal = 3;   // TODO: add a size selector
+    private int nPiezaVertical = 3;
     
     public Ventana() {
+        this.inicarTablero(nPiezaHorizontal, nPiezaVertical);
         this.iniciarlizarComponentes();
         this.setTitle(TITULO);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setMaximizedBounds(null);
         this.pack();
         this.setLocationRelativeTo(null);   // después del método pack() para que se coloque al centro después de ajustar el tamaño de la ventana.
     }
     private void iniciarlizarComponentes() {
-        this.add(new Tablero(3, 3));
+        this.add(tablero);
+    }
+
+    private void inicarTablero(int nPiezaHorizontal, int nPiezaVertical) {
+        tablero = new Tablero(nPiezaHorizontal, nPiezaVertical);
     }
 }
