@@ -9,13 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import practica.gui.Tablero;
+import practica.juego.LogicaTablero;
 
 /**
  *
  * @author cxz03
  */
 public class GestorTablero implements ActionListener, KeyListener{
-    Tablero tablero;
+    private Tablero tablero;
+    private LogicaTablero logicaTablero;
     public GestorTablero(Tablero tablero){
         this.tablero = tablero;
     }
