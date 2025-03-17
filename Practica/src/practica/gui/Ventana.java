@@ -7,9 +7,8 @@ package practica.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import practica.exceptions.ExcepcionMovimientoIlegal;
-import practica.exceptions.ExcepcionPuntoFueraDelTablero;
-import practica.game.Tablero;
+import practica.excepciones.ExcepcionMovimientoIlegal;
+import practica.excepciones.ExcepcionPuntoFueraDelTablero;
 
 /**
  * Esta clase será un JFrame y funcionará como el contenedor del tablero

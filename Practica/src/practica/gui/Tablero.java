@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package practica.game;
+package practica.gui;
 
+import practica.gui.Pieza;
+import practica.gestor.GestorTablero;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -15,9 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import practica.exceptions.ExcepcionMovimientoIlegal;
-
-import practica.exceptions.ExcepcionPuntoFueraDelTablero;
+import practica.excepciones.ExcepcionMovimientoIlegal;
+import practica.excepciones.ExcepcionPuntoFueraDelTablero;
 
 /**
  * Esta clase se colocará las piezas del tablero
@@ -97,7 +98,6 @@ public class Tablero extends JPanel {
             return;     // Eearly return para evitar actualizar la posición del jugador
         }
         xPuntoJugador = xDestino;
-
     }
 
     // Métodos sobre los movimientos de las piezas
@@ -115,7 +115,6 @@ public class Tablero extends JPanel {
             throw new ExcepcionMovimientoIlegal("Error: Tablero.java -> intercambiarPieza() -> movimiento ilegal");
         }
         // Hacemos el intercambio de piezas
-
         Image tmp = piezas[xOrigen][yOrigen].getSubImagen();
         piezas[xOrigen][yOrigen].ponerImagen(piezas[xDestino][yDestino].getSubImagen());
         piezas[xDestino][yDestino].ponerImagen(tmp);
