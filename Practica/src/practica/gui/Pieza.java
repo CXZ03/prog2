@@ -15,6 +15,7 @@ import javax.swing.JPanel;
  * @author cxz03
  */
 public class Pieza extends JPanel{
+    
     private static final int BORDER_WIDTH = 1;
     private Image subImagen;
     

@@ -29,22 +29,18 @@ public class Tablero extends JPanel {
 
     private static int ANCHO = 720;
     private static int ALTO = 720;
-    private GestorTablero gestorTablero;
     private String directorioImagen = "src/resources/linux-penguin.png";
     private String directorioImagenPuntoJugador = "src/resources/player-point.png";
     private Pieza piezas[][];
-    private int xPuntoJugador = 0;
-    private int yPuntoJugador = 0;
-
+    
     public Tablero(int nPiezaHorizontal, int nPiezaVertical) {
         this.setPreferredSize(new Dimension(ANCHO, ALTO));
         this.setLayout(new GridLayout(nPiezaVertical, nPiezaHorizontal));   // GridLayout tiene como primer parámetro fila (vertical) y segunda columna (horizontal)
         this.iniciarPiezas(nPiezaHorizontal, nPiezaVertical);
         this.iniciarComponentes();
-        this.iniciarGestorTablero();
     }
 
-    public void moverHaciaArriba() {
+    public void moverHaciaArriba(int xPuntoJugador, int yPuntoJugador) {
         int yDestino = yPuntoJugador - 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
@@ -58,7 +54,7 @@ public class Tablero extends JPanel {
         yPuntoJugador = yDestino;
     }
 
-    public void moverHaciaIzquierda() {
+    public void moverHaciaIzquierda(int xPuntoJugador, int yPuntoJugador) {
         int xDestino = xPuntoJugador - 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
@@ -72,7 +68,7 @@ public class Tablero extends JPanel {
         xPuntoJugador = xDestino;
     }
 
-    public void moverHaciaAbajo() {
+    public void moverHaciaAbajo(int xPuntoJugador, int yPuntoJugador) {
         int yDestino = yPuntoJugador + 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
@@ -86,7 +82,7 @@ public class Tablero extends JPanel {
         yPuntoJugador = yDestino;
     }
 
-    public void moverHaciaDerecha() {
+    public void moverHaciaDerecha(int xPuntoJugador, int yPuntoJugador) {
         int xDestino = xPuntoJugador + 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
@@ -110,33 +106,10 @@ public class Tablero extends JPanel {
         if ((xDestino < 0) || (xDestino >= piezas.length) || (yDestino < 0) || (yDestino >= piezas[0].length)) {
             throw new ExcepcionPuntoFueraDelTablero("Error: Tablero.java -> intercambiarPieza() -> punto destino fuera del tablero");
         }
-        // Miramos que sea un movimiento posible
-        if (!distanciaManhattanIgualAUno(xOrigen, yOrigen, xDestino, yDestino)) {
-            throw new ExcepcionMovimientoIlegal("Error: Tablero.java -> intercambiarPieza() -> movimiento ilegal");
-        }
         // Hacemos el intercambio de piezas
         Image tmp = piezas[xOrigen][yOrigen].getSubImagen();
         piezas[xOrigen][yOrigen].ponerImagen(piezas[xDestino][yDestino].getSubImagen());
         piezas[xDestino][yDestino].ponerImagen(tmp);
-    }
-
-    /**
-     * Verifica si la distancia de Manhattan entre dos puntos es igual a 1.
-     *
-     * La distancia de Manhattan es la suma de las diferencias absolutas de sus
-     * coordenadas cartesianas: d = |x1 - x2| + |y1 - y2|
-     *
-     * @param x1 coordenada x del primer punto
-     * @param y1 coordenada y del primer punto
-     * @param x2 coordenada x del segundo punto
-     * @param y2 coordenada y del segundo punto
-     * @return true si la distancia de Manhattan es igual a 1, false en caso
-     * contrario
-     * @author ClaudeAI generated
-     */
-    private static boolean distanciaManhattanIgualAUno(int x1, int y1, int x2, int y2) {
-        int distancia = Math.abs(x1 - x2) + Math.abs(y1 - y2);
-        return distancia == 1;
     }
 
     // Métodos sobre inicialización de componentes
@@ -172,13 +145,6 @@ public class Tablero extends JPanel {
         }
         imagen = resize(imagen, anchoSubImagen, altoSubImagen);
         piezas[0][0].ponerImagen(imagen);
-    }
-
-    private void iniciarGestorTablero() {
-        gestorTablero = new GestorTablero(this);
-        this.addKeyListener(gestorTablero);
-        this.setFocusable(true);
-        this.requestFocus();
     }
 
     /**

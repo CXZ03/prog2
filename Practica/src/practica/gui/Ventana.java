@@ -17,11 +17,9 @@ import practica.excepciones.ExcepcionPuntoFueraDelTablero;
 public class Ventana extends JFrame {
     private static final String TITULO = "ROMPECABEZAS";
     private Tablero tablero;
-    private int nPiezaHorizontal = 3;   // TODO: add a size selector
-    private int nPiezaVertical = 3;
     
-    public Ventana() {
-        this.inicarTablero(nPiezaHorizontal, nPiezaVertical);
+    public Ventana(Tablero tablero) {
+        this.tablero = tablero;
         this.iniciarlizarComponentes();
         this.setTitle(TITULO);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,9 +30,5 @@ public class Ventana extends JFrame {
     }
     private void iniciarlizarComponentes() {
         this.add(tablero);
-    }
-
-    private void inicarTablero(int nPiezaHorizontal, int nPiezaVertical) {
-        tablero = new Tablero(nPiezaHorizontal, nPiezaVertical);
     }
 }

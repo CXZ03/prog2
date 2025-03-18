@@ -39,6 +39,7 @@ public class LogicaTablero {
             throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaArriba -> yPuntoJugador <= 0, no se puede mover hacia arriba");
         }
         intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador, yPuntoJugador - 1);
+        yPuntoJugador--;
     }
 
     public void moverHaciaAbajo() throws ExcepcionMovimientoIlegal {
@@ -46,6 +47,7 @@ public class LogicaTablero {
             throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaAbajo -> yPuntoJugador >= numFilas - 1, no se puede mover hacia abajo");
         }
         intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador, yPuntoJugador + 1);
+        yPuntoJugador++;
     }
 
     public void moverHaciaIzquierda() throws ExcepcionMovimientoIlegal {
@@ -53,6 +55,7 @@ public class LogicaTablero {
             throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaIzquierda -> xPuntoJugador <= 0, no se puede mover hacia izquierda");
         }
         intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador - 1, yPuntoJugador);
+        xPuntoJugador--;
     }
 
     public void moverHaciaDerecha() throws ExcepcionMovimientoIlegal {
@@ -60,7 +63,7 @@ public class LogicaTablero {
             throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaDerecha -> xPuntoJugador >= numColumna - 1, no se puede mover hacia derecha");
         }
         intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador + 1, yPuntoJugador);
-
+        xPuntoJugador++;
     }
 
     private void intercambiarPiezas(int x1, int y1, int x2, int y2) {
@@ -81,4 +84,14 @@ public class LogicaTablero {
         }
         return resuelto;
     }
+
+    public int getXPuntoJugador() {
+        return xPuntoJugador;
+    }
+
+    public int getYPuntoJugador() {
+        return yPuntoJugador;
+    }
+    
+    
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import practica.excepciones.ExcepcionMovimientoIlegal;
 import practica.gui.Tablero;
 import practica.juego.LogicaTablero;
 
@@ -15,32 +16,73 @@ import practica.juego.LogicaTablero;
  *
  * @author cxz03
  */
-public class GestorTablero implements ActionListener, KeyListener{
+public class GestorTablero implements ActionListener, KeyListener {
+
     private Tablero tablero;
     private LogicaTablero logicaTablero;
-    public GestorTablero(Tablero tablero){
+
+    public GestorTablero(Tablero tablero, LogicaTablero logicaTablero) {
         this.tablero = tablero;
+        iniciarTablero();
+        this.logicaTablero = logicaTablero;
     }
-    
-    private void gestionarTeclaW(){
-        tablero.moverHaciaArriba();
+
+    private void iniciarTablero() {
+        tablero.addKeyListener(this);
+        tablero.setFocusable(true);
+        tablero.requestFocus();
     }
-    
-    private void gestionarTeclaA(){
-        tablero.moverHaciaIzquierda();
+
+    private void gestionarTeclaW() {
+        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
+        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
+        try {
+            logicaTablero.moverHaciaArriba();
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;     // Error no actualizamos el tablero
+        }
+        tablero.moverHaciaArriba(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
     }
-    
+
+    private void gestionarTeclaA() {
+        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
+        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
+        try {
+            logicaTablero.moverHaciaIzquierda();
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;
+        }
+        tablero.moverHaciaIzquierda(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
+    }
+
     private void gestionarTeclaS() {
-        tablero.moverHaciaAbajo();
+        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
+        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
+        try {
+            logicaTablero.moverHaciaAbajo();
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;
+        }
+        tablero.moverHaciaAbajo(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
     }
-    
+
     private void gestionarTeclaD() {
-        tablero.moverHaciaDerecha();
+        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
+        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
+        try {
+            logicaTablero.moverHaciaDerecha();
+        } catch (ExcepcionMovimientoIlegal ex) {
+            System.err.println(ex.getMessage());
+            return;
+        }
+        tablero.moverHaciaDerecha(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

@@ -4,19 +4,27 @@
  */
 package practica;
 
+import practica.gestor.GestorTablero;
+import practica.gui.Tablero;
 import practica.gui.Ventana;
+import practica.juego.LogicaTablero;
 
 /**
  *
  * @author cxz03
  */
 public class Main {
-
+    public static int N_COLUMNAS = 3;
+    public static int N_FILAS = 3;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Ventana().setVisible(true);
+        Tablero tablero = new Tablero(N_COLUMNAS, N_FILAS);
+        LogicaTablero logicaTablero = new LogicaTablero(N_COLUMNAS, N_FILAS);
+        GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
+        new Ventana(tablero).setVisible(true);
     }
     
 }
