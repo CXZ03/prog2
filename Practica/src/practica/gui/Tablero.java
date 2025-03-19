@@ -5,7 +5,6 @@
 package practica.gui;
 
 import practica.gui.Pieza;
-import practica.gestor.GestorTablero;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -17,8 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import practica.excepciones.ExcepcionMovimientoIlegal;
-import practica.excepciones.ExcepcionPuntoFueraDelTablero;
 
 /**
  * Esta clase se colocará las piezas del tablero
@@ -32,112 +29,56 @@ public class Tablero extends JPanel {
     private String directorioImagen = "src/resources/linux-penguin.png";
     private String directorioImagenPuntoJugador = "src/resources/player-point.png";
     private Pieza piezas[][];
-    
+
     public Tablero(int nPiezaHorizontal, int nPiezaVertical) {
         this.setPreferredSize(new Dimension(ANCHO, ALTO));
         this.setLayout(new GridLayout(nPiezaVertical, nPiezaHorizontal));   // GridLayout tiene como primer parámetro fila (vertical) y segunda columna (horizontal)
-        this.iniciarPiezas(nPiezaHorizontal, nPiezaVertical);
-        this.iniciarComponentes();
-    }
-
-    public void moverHaciaArriba(int xPuntoJugador, int yPuntoJugador) {
-        int yDestino = yPuntoJugador - 1;
-        try {
-            intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
-        }catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        }
-        // Eearly return para evitar actualizar la posición del jugador
-        yPuntoJugador = yDestino;
-    }
-
-    public void moverHaciaIzquierda(int xPuntoJugador, int yPuntoJugador) {
-        int xDestino = xPuntoJugador - 1;
-        try {
-            intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
-        }catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        }
-        // Eearly return para evitar actualizar la posición del jugador
-        xPuntoJugador = xDestino;
-    }
-
-    public void moverHaciaAbajo(int xPuntoJugador, int yPuntoJugador) {
-        int yDestino = yPuntoJugador + 1;
-        try {
-            intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
-        }catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        }
-        // Eearly return para evitar actualizar la posición del jugador
-        yPuntoJugador = yDestino;
-    }
-
-    public void moverHaciaDerecha(int xPuntoJugador, int yPuntoJugador) {
-        int xDestino = xPuntoJugador + 1;
-        try {
-            intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
-        } catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        }
-        xPuntoJugador = xDestino;
     }
 
     // Métodos sobre los movimientos de las piezas
-    private void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) throws ExcepcionPuntoFueraDelTablero {
-        // Miramos que el punto origen esté dentro del tablero
-        if ((xOrigen < 0) || (xOrigen >= piezas.length) || (yOrigen < 0) || (yDestino >= piezas[0].length)) {
-            throw new ExcepcionPuntoFueraDelTablero("Error: Tablero.java -> intercambiarPieza() -> punto origen fuera del tablero");
-        }
-        // Miramos que el punto de destino esté dentro del tablero
-        if ((xDestino < 0) || (xDestino >= piezas.length) || (yDestino < 0) || (yDestino >= piezas[0].length)) {
-            throw new ExcepcionPuntoFueraDelTablero("Error: Tablero.java -> intercambiarPieza() -> punto destino fuera del tablero");
-        }
-        // Hacemos el intercambio de piezas
+    public void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) {
         Image tmp = piezas[xOrigen][yOrigen].getSubImagen();
         piezas[xOrigen][yOrigen].ponerImagen(piezas[xDestino][yDestino].getSubImagen());
         piezas[xDestino][yDestino].ponerImagen(tmp);
     }
 
     // Métodos sobre inicialización de componentes
-    private void iniciarComponentes() {
+    public void iniciarComponentes() {
         for (int j = 0; j < piezas[0].length; j++) {
             for (int i = 0; i < piezas.length; i++) {
                 this.add(piezas[i][j]);
             }
         }
     }
-
-    private void iniciarPiezas(int nPiezaHorizontal, int nPiezaVertical) {
+    
+    public void iniciarPiezas(int[][] estadoTablero, int xPosJugador, int yPosJugador, int nPiezaHorizontal, int nPiezaVertical) {
         piezas = new Pieza[nPiezaHorizontal][nPiezaVertical];
         BufferedImage imagen = null;
         try {
             imagen = ImageIO.read(new File(directorioImagen));
-        } catch (IOException ex) {
-            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        imagen = resize(imagen, ANCHO, ALTO);
-        int anchoSubImagen = ANCHO / nPiezaHorizontal;
-        int altoSubImagen = ALTO / nPiezaVertical;
-        for (int i = 0, posImagenHorizontal = 0; i < nPiezaHorizontal; i++, posImagenHorizontal += anchoSubImagen) {
-            for (int j = 0, posImagenVertical = 0; j < nPiezaVertical; j++, posImagenVertical += altoSubImagen) {
-                piezas[i][j] = new Pieza();
-                piezas[i][j].ponerImagen(imagen.getSubimage(posImagenHorizontal, posImagenVertical, anchoSubImagen, altoSubImagen));
-            }
-        }
-        try {
-            imagen = ImageIO.read(new File(directorioImagenPuntoJugador));
-        } catch (IOException ex) {
-            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        imagen = resize(imagen, anchoSubImagen, altoSubImagen);
-        piezas[0][0].ponerImagen(imagen);
-    }
 
+            imagen = resize(imagen, ANCHO, ALTO);
+            int anchoSubImagen = ANCHO / nPiezaHorizontal;
+            int altoSubImagen = ALTO / nPiezaVertical;
+            int posImagenHorizontal;
+            int posImagenVertical;
+            int posPiezaActual;
+            for (int i = 0; i < nPiezaHorizontal; i++) {
+                for (int j = 0; j < nPiezaVertical; j++) {
+                    posPiezaActual = estadoTablero[i][j];
+                    posImagenHorizontal = posPiezaActual / estadoTablero.length;
+                    posImagenVertical = posPiezaActual % estadoTablero.length;
+                    piezas[i][j] = new Pieza();
+                    piezas[i][j].ponerImagen(imagen.getSubimage(posImagenHorizontal * anchoSubImagen, posImagenVertical * altoSubImagen, anchoSubImagen, altoSubImagen));
+                }
+            }
+            imagen = ImageIO.read(new File(directorioImagenPuntoJugador));
+            imagen = resize(imagen, anchoSubImagen, altoSubImagen);
+            piezas[xPosJugador][yPosJugador].ponerImagen(imagen);
+        } catch (IOException ex) {
+            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * Redimensiona una imagen a un nuevo ancho y alto especificados. Este
      * método utiliza el algoritmo SCALE_SMOOTH para obtener una mejor calidad

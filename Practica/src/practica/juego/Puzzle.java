@@ -5,13 +5,17 @@
 package practica.juego;
 
 import java.util.Random;
+import practica.definicion.Movimiento;
 import practica.excepciones.ExcepcionMovimientoIlegal;
+import practica.gui.Tablero;
 
 /**
  *
  * @author cxz03
  */
 public class Puzzle {
+    
+    private Tablero tablero;
 
     private int[][] estadoPiezas;
     private int numFilas;
@@ -19,11 +23,15 @@ public class Puzzle {
     private int xPuntoJugador = 0;
     private int yPuntoJugador = 0;
 
-    public Puzzle(int numColumnas, int numFilas) {
+    public Puzzle(Tablero tablero, int numColumnas, int numFilas) {
+        this.tablero = tablero;
         this.numColumnas = numColumnas;
         this.numFilas = numFilas;
         this.estadoPiezas = new int[numColumnas][numFilas];
         inicializarEstadoPiezas();
+        mezclarPiezas();
+        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
+        tablero.iniciarComponentes();
     }
 
     private void inicializarEstadoPiezas() {
@@ -34,7 +42,7 @@ public class Puzzle {
             }
         }
     }
-    
+
     public void mezclarPiezas() {
         Random random = new Random();
         int randomI;
@@ -47,10 +55,21 @@ public class Puzzle {
                 tmp = estadoPiezas[i][j];
                 estadoPiezas[i][j] = estadoPiezas[randomI][randomJ];
                 estadoPiezas[randomI][randomJ] = tmp;
+                if (esPuntoJugador(i, j)) {
+                    xPuntoJugador = randomI;
+                    yPuntoJugador = randomJ;
+                } else if (esPuntoJugador(randomI, randomJ)) {
+                    xPuntoJugador = i;
+                    yPuntoJugador = j;
+                }
             }
         }
     }
     
+    private boolean esPuntoJugador(int x, int y) {
+        return (xPuntoJugador == x && yPuntoJugador == y);
+    }
+
     public void imprimirEstadoPiezas() {
         for (int i = 0; i < estadoPiezas.length; i++) {
             for (int j = 0; j < estadoPiezas[0].length; j++) {
@@ -60,36 +79,40 @@ public class Puzzle {
         }
     }
 
-    public void moverHaciaArriba() throws ExcepcionMovimientoIlegal {
-        if (yPuntoJugador <= 0) {
-            throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaArriba -> yPuntoJugador <= 0, no se puede mover hacia arriba");
+    public void mover(Movimiento mov) throws ExcepcionMovimientoIlegal {
+        int xNueva = xPuntoJugador;
+        int yNueva = yPuntoJugador;
+        switch (mov) {
+            case Movimiento.ARRIBA:
+                if (yPuntoJugador <= 0) {
+                    throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaArriba -> yPuntoJugador <= 0, no se puede mover hacia arriba");
+                }
+                yNueva--;
+                break;
+            case Movimiento.IZQUIERDA:
+                if (xPuntoJugador <= 0) {
+                    throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaIzquierda -> xPuntoJugador <= 0, no se puede mover hacia izquierda");
+                }
+                xNueva--;
+                break;
+            case Movimiento.ABAJO:
+                if (yPuntoJugador >= numFilas - 1) {
+                    throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaAbajo -> yPuntoJugador >= numFilas - 1, no se puede mover hacia abajo");
+                }
+                yNueva++;
+                break;
+            
+            case Movimiento.DERECHA:
+                if (xPuntoJugador >= numColumnas - 1) {
+                    throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaDerecha -> xPuntoJugador >= numColumna - 1, no se puede mover hacia derecha");
+                }
+                xNueva++;
+                break;
         }
-        intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador, yPuntoJugador - 1);
-        yPuntoJugador--;
-    }
-
-    public void moverHaciaAbajo() throws ExcepcionMovimientoIlegal {
-        if (yPuntoJugador >= numFilas - 1) {
-            throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaAbajo -> yPuntoJugador >= numFilas - 1, no se puede mover hacia abajo");
-        }
-        intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador, yPuntoJugador + 1);
-        yPuntoJugador++;
-    }
-
-    public void moverHaciaIzquierda() throws ExcepcionMovimientoIlegal {
-        if (xPuntoJugador <= 0) {
-            throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaIzquierda -> xPuntoJugador <= 0, no se puede mover hacia izquierda");
-        }
-        intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador - 1, yPuntoJugador);
-        xPuntoJugador--;
-    }
-
-    public void moverHaciaDerecha() throws ExcepcionMovimientoIlegal {
-        if (xPuntoJugador >= numColumnas - 1) {
-            throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaDerecha -> xPuntoJugador >= numColumna - 1, no se puede mover hacia derecha");
-        }
-        intercambiarPiezas(xPuntoJugador, yPuntoJugador, xPuntoJugador + 1, yPuntoJugador);
-        xPuntoJugador++;
+        intercambiarPiezas(xPuntoJugador, yPuntoJugador, xNueva, yNueva);
+        tablero.intercambiarPieza(xPuntoJugador, yPuntoJugador, xNueva, yNueva);
+        xPuntoJugador = xNueva;
+        yPuntoJugador = yNueva;
     }
 
     private void intercambiarPiezas(int x1, int y1, int x2, int y2) {
@@ -97,13 +120,13 @@ public class Puzzle {
         estadoPiezas[x1][y1] = estadoPiezas[x2][y2];
         estadoPiezas[x2][y2] = tmp;
     }
-    
+
     public boolean estaResuelto() {
         int numActual = 0;
         boolean resuelto = true;
         for (int j = 0; (j < numFilas) && resuelto; j++) {
             for (int i = 0; i < numColumnas; i++) {
-                if (estadoPiezas[i][j] != numActual++){
+                if (estadoPiezas[i][j] != numActual++) {
                     resuelto = false;
                 }
             }
@@ -118,4 +141,10 @@ public class Puzzle {
     public int getYPuntoJugador() {
         return yPuntoJugador;
     }
+
+    public int[][] getEstadoPiezas() {
+        return estadoPiezas;
+    }
+    
+    
 }

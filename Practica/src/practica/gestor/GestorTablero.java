@@ -10,10 +10,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import practica.definicion.Movimiento;
 import practica.excepciones.ExcepcionMovimientoIlegal;
 import practica.gui.Tablero;
 import practica.juego.Puzzle;
-import practica.utilidades.ColorConsola;
+import practica.definicion.ColorConsola;
 
 /**
  *
@@ -22,12 +23,12 @@ import practica.utilidades.ColorConsola;
 public class GestorTablero implements ActionListener, KeyListener {
 
     private Tablero tablero;
-    private Puzzle logicaTablero;
+    private Puzzle puzzle;
 
-    public GestorTablero(Tablero tablero, Puzzle logicaTablero) {
+    public GestorTablero(Tablero tablero, Puzzle puzzle) {
         this.tablero = tablero;
         iniciarTablero();
-        this.logicaTablero = logicaTablero;
+        this.puzzle = puzzle;
     }
 
     private void iniciarTablero() {
@@ -37,38 +38,33 @@ public class GestorTablero implements ActionListener, KeyListener {
     }
 
     private void gestionarTeclaW() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
-        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
-        logicaTablero.moverHaciaArriba();
-        tablero.moverHaciaArriba(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
+        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
+        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
+        puzzle.mover(Movimiento.ARRIBA);
     }
 
     private void gestionarTeclaA() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
-        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
-        logicaTablero.moverHaciaIzquierda();
-        tablero.moverHaciaIzquierda(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
+        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
+        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
+        puzzle.mover(Movimiento.IZQUIERDA);
     }
 
     private void gestionarTeclaS() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
-        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
-        logicaTablero.moverHaciaAbajo();
-        tablero.moverHaciaAbajo(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
+        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
+        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
+        puzzle.mover(Movimiento.ABAJO);
     }
 
     private void gestionarTeclaD() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = logicaTablero.getXPuntoJugador();
-        int yPuntoJugadorOrigen = logicaTablero.getYPuntoJugador();
-        logicaTablero.moverHaciaDerecha();
-        tablero.moverHaciaDerecha(xPuntoJugadorOrigen, yPuntoJugadorOrigen);
+        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
+        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
+        puzzle.mover(Movimiento.DERECHA);
     }
 
-    private void gestionarTeclaPresionada(char letraTecla) {
+    private void gestionarTeclaPresionada(Movimiento mov) {
         boolean jugadaLegal = true;
-        switch (letraTecla) {
-            case 'w':
-            case 'W':
+        switch (mov) {
+            case Movimiento.ARRIBA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'w'" + ColorConsola.REINICIAR);
                 try {
                     this.gestionarTeclaW();
@@ -76,10 +72,9 @@ public class GestorTablero implements ActionListener, KeyListener {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
                 }
-                break;
+            }
 
-            case 'a':
-            case 'A':
+            case Movimiento.IZQUIERDA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'a'" + ColorConsola.REINICIAR);
                 try {
                     this.gestionarTeclaA();
@@ -87,9 +82,8 @@ public class GestorTablero implements ActionListener, KeyListener {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
                 }
-                break;
-            case 's':
-            case 'S':
+            }
+            case Movimiento.ABAJO -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 's'" + ColorConsola.REINICIAR);
                 try {
                     this.gestionarTeclaS();
@@ -97,9 +91,8 @@ public class GestorTablero implements ActionListener, KeyListener {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
                 }
-                break;
-            case 'd':
-            case 'D':
+            }
+            case Movimiento.DERECHA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'd'" + ColorConsola.REINICIAR);
                 try {
                     this.gestionarTeclaD();
@@ -107,11 +100,10 @@ public class GestorTablero implements ActionListener, KeyListener {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
                 }
-                break;
-            default:
-                System.out.println("---> DEBUG: key pressed <SIN ASIGNAR>");
+            }
+            default -> System.out.println("---> DEBUG: key pressed <SIN ASIGNAR>");
         }
-        if (jugadaLegal && logicaTablero.estaResuelto()) {
+        if (jugadaLegal && puzzle.estaResuelto()) {
             System.out.println("HAS GANADO");
         }
     }
@@ -126,7 +118,7 @@ public class GestorTablero implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        gestionarTeclaPresionada(e.getKeyChar());
+        gestionarTeclaPresionada(Movimiento.obtenerMovimiento(e.getKeyChar()));
     }
 
     @Override
