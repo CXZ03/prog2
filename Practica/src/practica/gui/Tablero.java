@@ -44,13 +44,11 @@ public class Tablero extends JPanel {
         int yDestino = yPuntoJugador - 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
-        } catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        } catch (ExcepcionMovimientoIlegal ex) {
+        }catch (ExcepcionPuntoFueraDelTablero ex) {
             System.err.println(ex.getMessage());
             return;     // Eearly return para evitar actualizar la posición del jugador
         }
+        // Eearly return para evitar actualizar la posición del jugador
         yPuntoJugador = yDestino;
     }
 
@@ -58,13 +56,11 @@ public class Tablero extends JPanel {
         int xDestino = xPuntoJugador - 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xDestino, yPuntoJugador);
-        } catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        } catch (ExcepcionMovimientoIlegal ex) {
+        }catch (ExcepcionPuntoFueraDelTablero ex) {
             System.err.println(ex.getMessage());
             return;     // Eearly return para evitar actualizar la posición del jugador
         }
+        // Eearly return para evitar actualizar la posición del jugador
         xPuntoJugador = xDestino;
     }
 
@@ -72,13 +68,11 @@ public class Tablero extends JPanel {
         int yDestino = yPuntoJugador + 1;
         try {
             intercambiarPieza(xPuntoJugador, yPuntoJugador, xPuntoJugador, yDestino);
-        } catch (ExcepcionPuntoFueraDelTablero ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
-        } catch (ExcepcionMovimientoIlegal ex) {
+        }catch (ExcepcionPuntoFueraDelTablero ex) {
             System.err.println(ex.getMessage());
             return;     // Eearly return para evitar actualizar la posición del jugador
         }
+        // Eearly return para evitar actualizar la posición del jugador
         yPuntoJugador = yDestino;
     }
 
@@ -89,15 +83,12 @@ public class Tablero extends JPanel {
         } catch (ExcepcionPuntoFueraDelTablero ex) {
             System.err.println(ex.getMessage());
             return;     // Eearly return para evitar actualizar la posición del jugador
-        } catch (ExcepcionMovimientoIlegal ex) {
-            System.err.println(ex.getMessage());
-            return;     // Eearly return para evitar actualizar la posición del jugador
         }
         xPuntoJugador = xDestino;
     }
 
     // Métodos sobre los movimientos de las piezas
-    private void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) throws ExcepcionPuntoFueraDelTablero, ExcepcionMovimientoIlegal {
+    private void intercambiarPieza(int xOrigen, int yOrigen, int xDestino, int yDestino) throws ExcepcionPuntoFueraDelTablero {
         // Miramos que el punto origen esté dentro del tablero
         if ((xOrigen < 0) || (xOrigen >= piezas.length) || (yOrigen < 0) || (yDestino >= piezas[0].length)) {
             throw new ExcepcionPuntoFueraDelTablero("Error: Tablero.java -> intercambiarPieza() -> punto origen fuera del tablero");

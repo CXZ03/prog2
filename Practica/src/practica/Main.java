@@ -7,7 +7,7 @@ package practica;
 import practica.gestor.GestorTablero;
 import practica.gui.Tablero;
 import practica.gui.Ventana;
-import practica.juego.LogicaTablero;
+import practica.juego.Puzzle;
 
 /**
  *
@@ -22,9 +22,8 @@ public class Main {
      */
     public static void main(String[] args) {
         Tablero tablero = new Tablero(N_COLUMNAS, N_FILAS);
-        LogicaTablero logicaTablero = new LogicaTablero(N_COLUMNAS, N_FILAS);
+        Puzzle logicaTablero = new Puzzle(N_COLUMNAS, N_FILAS);
         GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
         new Ventana(tablero).setVisible(true);
-    }
-    
+    }    
 }

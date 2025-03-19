@@ -4,13 +4,14 @@
  */
 package practica.juego;
 
+import java.util.Random;
 import practica.excepciones.ExcepcionMovimientoIlegal;
 
 /**
  *
  * @author cxz03
  */
-public class LogicaTablero {
+public class Puzzle {
 
     private int[][] estadoPiezas;
     private int numFilas;
@@ -18,7 +19,7 @@ public class LogicaTablero {
     private int xPuntoJugador = 0;
     private int yPuntoJugador = 0;
 
-    public LogicaTablero(int numColumnas, int numFilas) {
+    public Puzzle(int numColumnas, int numFilas) {
         this.numColumnas = numColumnas;
         this.numFilas = numFilas;
         this.estadoPiezas = new int[numColumnas][numFilas];
@@ -31,6 +32,31 @@ public class LogicaTablero {
             for (int i = 0; i < numColumnas; i++) {
                 estadoPiezas[i][j] = numActual++;
             }
+        }
+    }
+    
+    public void mezclarPiezas() {
+        Random random = new Random();
+        int randomI;
+        int randomJ;
+        int tmp;
+        for (int i = 0; i < estadoPiezas.length; i++) {
+            for (int j = 0; j < estadoPiezas[0].length; j++) {
+                randomI = random.nextInt(estadoPiezas.length);
+                randomJ = random.nextInt(estadoPiezas[0].length);
+                tmp = estadoPiezas[i][j];
+                estadoPiezas[i][j] = estadoPiezas[randomI][randomJ];
+                estadoPiezas[randomI][randomJ] = tmp;
+            }
+        }
+    }
+    
+    public void imprimirEstadoPiezas() {
+        for (int i = 0; i < estadoPiezas.length; i++) {
+            for (int j = 0; j < estadoPiezas[0].length; j++) {
+                System.out.print(estadoPiezas[i][j] + " ");
+            }
+            System.out.println();
         }
     }
 
@@ -92,6 +118,4 @@ public class LogicaTablero {
     public int getYPuntoJugador() {
         return yPuntoJugador;
     }
-    
-    
 }
