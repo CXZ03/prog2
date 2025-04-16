@@ -105,6 +105,8 @@ public class GestorTablero implements ActionListener, KeyListener {
         }
         if (jugadaLegal && puzzle.estaResuelto()) {
             System.out.println("HAS GANADO");
+            
+            // pendiente de modificar mensaje dialog Joptiion
         }
     }
 
