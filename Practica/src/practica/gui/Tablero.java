@@ -66,8 +66,8 @@ public class Tablero extends JPanel {
             for (int i = 0; i < nPiezaHorizontal; i++) {
                 for (int j = 0; j < nPiezaVertical; j++) {
                     posPiezaActual = estadoTablero[i][j];
-                    posImagenHorizontal = posPiezaActual / estadoTablero.length;
-                    posImagenVertical = posPiezaActual % estadoTablero.length;
+                    posImagenVertical = posPiezaActual / estadoTablero.length;
+                    posImagenHorizontal = posPiezaActual % estadoTablero.length;
                     piezas[i][j] = new Pieza();
                     piezas[i][j].ponerImagen(imagen.getSubimage(posImagenHorizontal * anchoSubImagen, posImagenVertical * altoSubImagen, anchoSubImagen, altoSubImagen));
                 }
@@ -89,7 +89,7 @@ public class Tablero extends JPanel {
      * @param newH El nuevo alto en píxeles para la imagen redimensionada
      * @return BufferedImage Una nueva instancia de BufferedImage con las
      * dimensiones especificadas
-     * @author Ocracoke (StackOverflow)
+     * @author Ocracoke (StackOverflow), https://stackoverflow.com/questions/9417356/bufferedimage-resize
      */
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);

@@ -4,12 +4,8 @@
  */
 package practica.gestor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import practica.definicion.Movimiento;
 import practica.excepciones.ExcepcionMovimientoIlegal;
 import practica.gui.Tablero;
@@ -20,7 +16,7 @@ import practica.definicion.ColorConsola;
  *
  * @author cxz03
  */
-public class GestorTablero implements ActionListener, KeyListener {
+public class GestorTablero implements KeyListener {
 
     private Tablero tablero;
     private Puzzle puzzle;
@@ -108,10 +104,6 @@ public class GestorTablero implements ActionListener, KeyListener {
             
             // pendiente de modificar mensaje dialog Joptiion
         }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 
     @Override

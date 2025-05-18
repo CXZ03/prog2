@@ -4,31 +4,63 @@
  */
 package practica.gui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import practica.excepciones.ExcepcionMovimientoIlegal;
-import practica.excepciones.ExcepcionPuntoFueraDelTablero;
+import practica.gestor.GestorTablero;
+import practica.juego.Puzzle;
 
 /**
  * Esta clase será un JFrame y funcionará como el contenedor del tablero
+ *
  * @author cxz03
  */
 public class Ventana extends JFrame {
+
     private static final String TITULO = "ROMPECABEZAS";
+    private BarraMenuJuego barraMenu;
     private Tablero tablero;
-    
-    public Ventana(Tablero tablero) {
-        this.tablero = tablero;
-        this.iniciarlizarComponentes();
-        this.setTitle(TITULO);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setMaximizedBounds(null);
-        this.pack();
-        this.setLocationRelativeTo(null);   // después del método pack() para que se coloque al centro después de ajustar el tamaño de la ventana.
+
+    public Ventana() {
+        // Lanzar el formulario para obtener los parametros de la partida
+        FormularioPuzle formularioResultado = lanzarFormulario();
+
+        inicializarTablero(formularioResultado.getNumeroColumnas(), formularioResultado.getNumeroFilas());
+
+        colocarComponentes();
+        
+        // Añadir el menu
+        barraMenu = new BarraMenuJuego();
+        setJMenuBar(barraMenu);
+        
+        // Configurar parametros de la ventana
+        setTitle(TITULO);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        setMaximizedBounds(null);
+        pack();
+        setLocationRelativeTo(null);  // después del método pack() para que se coloque al centro después de ajustar el tamaño de la ventana.
     }
-    private void iniciarlizarComponentes() {
-        this.add(tablero);
+
+    private void colocarComponentes() {
+        add(tablero);
+    }
+
+    private void inicializarTablero(int numeroColumna, int numeroFilas) {
+        tablero = new Tablero(numeroColumna, numeroFilas);
+        Puzzle logicaTablero = new Puzzle(tablero, numeroColumna, numeroFilas);
+        GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
+    }
+
+    private FormularioPuzle lanzarFormulario() {
+        DialogoFormulario dialogo = new DialogoFormulario(this);
+        dialogo.setVisible(true);
+
+        if (!dialogo.seAcepto()) {
+            System.out.println("No se acepto el formulario");
+            // Terminamos el programa si el usuario ha cerrado el formulario
+            // dispose();  // NOTA: con dispose() se sigue ejecutando el contructor de Ventana y produce excepciones porque el formulario no esta completo
+            System.exit(0);
+        }
+
+        return dialogo.getFormulario();
     }
 }
