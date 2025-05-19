@@ -44,11 +44,21 @@ public class Tablero extends JPanel {
 
     // Métodos sobre inicialización de componentes
     public void iniciarComponentes() {
+        // Quitamos todas la piezas previas;
+        removeAll();
+        
+        // Agregamos las piezas al panel
         for (int j = 0; j < piezas[0].length; j++) {
             for (int i = 0; i < piezas.length; i++) {
                 this.add(piezas[i][j]);
             }
         }
+        
+        // Informar al layout manager que el panel ha sido modificado
+        revalidate();
+        
+        // Solicitar que pinte de nuevo el panel
+        repaint();
     }
     
     public void iniciarPiezas(int[][] estadoTablero, int xPosJugador, int yPosJugador, int nPiezaHorizontal, int nPiezaVertical) {

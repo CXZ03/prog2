@@ -5,6 +5,7 @@
 package practica.gui;
 
 import javax.swing.JFrame;
+import practica.gestor.GestorBarraMenu;
 import practica.gestor.GestorTablero;
 import practica.juego.Puzzle;
 
@@ -23,14 +24,22 @@ public class Ventana extends JFrame {
         // Lanzar el formulario para obtener los parametros de la partida
         FormularioPuzle formularioResultado = lanzarFormulario();
 
-        inicializarTablero(formularioResultado.getNumeroColumnas(), formularioResultado.getNumeroFilas());
+        // Obtenemos la cantidad de columnas y filas para crear el tablero
+        int numeroColumnas = formularioResultado.getNumeroColumnas();
+        int numeroFilas = formularioResultado.getNumeroFilas();
 
-        colocarComponentes();
-        
+        // Inicializar el Tablero
+        tablero = new Tablero(numeroColumnas, numeroFilas);
+        Puzzle logicaTablero = new Puzzle(tablero, numeroColumnas, numeroFilas);
+        GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
+
         // Añadir el menu
         barraMenu = new BarraMenuJuego();
-        setJMenuBar(barraMenu);
-        
+        GestorBarraMenu gestorBarraMenu = new GestorBarraMenu(barraMenu, logicaTablero);
+
+        // Colocamos los componentes en la ventana
+        colocarComponentes();
+
         // Configurar parametros de la ventana
         setTitle(TITULO);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,12 +51,7 @@ public class Ventana extends JFrame {
 
     private void colocarComponentes() {
         add(tablero);
-    }
-
-    private void inicializarTablero(int numeroColumna, int numeroFilas) {
-        tablero = new Tablero(numeroColumna, numeroFilas);
-        Puzzle logicaTablero = new Puzzle(tablero, numeroColumna, numeroFilas);
-        GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
+        setJMenuBar(barraMenu);
     }
 
     private FormularioPuzle lanzarFormulario() {

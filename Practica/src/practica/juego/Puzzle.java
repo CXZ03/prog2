@@ -20,16 +20,27 @@ public class Puzzle {
     private int[][] estadoPiezas;
     private int numFilas;
     private int numColumnas;
-    private int xPuntoJugador = 0;
-    private int yPuntoJugador = 0;
+    private int xPuntoJugador;
+    private int yPuntoJugador;
 
     public Puzzle(Tablero tablero, int numColumnas, int numFilas) {
         this.tablero = tablero;
         this.numColumnas = numColumnas;
         this.numFilas = numFilas;
-        this.estadoPiezas = new int[numColumnas][numFilas];
+        estadoPiezas = new int[numColumnas][numFilas];
+        xPuntoJugador = 0;
+        yPuntoJugador = 0;
+
         inicializarEstadoPiezas();
         mezclarPiezas();
+        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
+        tablero.iniciarComponentes();
+    }
+    
+    public void resolver() {
+        xPuntoJugador = 0;
+        yPuntoJugador = 0;
+        inicializarEstadoPiezas();
         tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
         tablero.iniciarComponentes();
     }
