@@ -29,14 +29,12 @@ public class GestorBarraMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JMenuItem source = (JMenuItem) e.getSource();
         // Identificamos que boton ha sido comparando la referencia
-        if (source == barraMenu.getBotonResolver()) {
-            System.out.println("Resolver...");
-            
+        if (source == barraMenu.getBotonResolver()) {            
             puzzle.resolver();
         } else if (source == barraMenu.getBotonMezclar()) {
-            System.out.println("Mezclar...");
+            puzzle.mezclar();
         } else if (source == barraMenu.getBotonSalir()) {
-            System.out.println("Salir...");
+            System.exit(0);
         }
     }
 }

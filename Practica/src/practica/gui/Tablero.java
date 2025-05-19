@@ -46,21 +46,18 @@ public class Tablero extends JPanel {
     public void iniciarComponentes() {
         // Quitamos todas la piezas previas;
         removeAll();
-        
+
         // Agregamos las piezas al panel
         for (int j = 0; j < piezas[0].length; j++) {
             for (int i = 0; i < piezas.length; i++) {
                 this.add(piezas[i][j]);
             }
         }
-        
+
         // Informar al layout manager que el panel ha sido modificado
         revalidate();
-        
-        // Solicitar que pinte de nuevo el panel
-        repaint();
     }
-    
+
     public void iniciarPiezas(int[][] estadoTablero, int xPosJugador, int yPosJugador, int nPiezaHorizontal, int nPiezaVertical) {
         piezas = new Pieza[nPiezaHorizontal][nPiezaVertical];
         BufferedImage imagen = null;
@@ -89,6 +86,7 @@ public class Tablero extends JPanel {
             Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * Redimensiona una imagen a un nuevo ancho y alto especificados. Este
      * método utiliza el algoritmo SCALE_SMOOTH para obtener una mejor calidad
@@ -99,7 +97,8 @@ public class Tablero extends JPanel {
      * @param newH El nuevo alto en píxeles para la imagen redimensionada
      * @return BufferedImage Una nueva instancia de BufferedImage con las
      * dimensiones especificadas
-     * @author Ocracoke (StackOverflow), https://stackoverflow.com/questions/9417356/bufferedimage-resize
+     * @author Ocracoke (StackOverflow),
+     * https://stackoverflow.com/questions/9417356/bufferedimage-resize
      */
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);

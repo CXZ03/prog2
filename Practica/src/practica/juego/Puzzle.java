@@ -44,6 +44,15 @@ public class Puzzle {
         tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
         tablero.iniciarComponentes();
     }
+    
+    public void mezclar() {
+        xPuntoJugador = 0;
+        yPuntoJugador = 0;
+        inicializarEstadoPiezas();
+        mezclarPiezas();
+        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
+        tablero.iniciarComponentes();
+    }
 
     private void inicializarEstadoPiezas() {
         int numActual = 0;
