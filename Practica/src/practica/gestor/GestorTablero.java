@@ -105,6 +105,7 @@ public class GestorTablero implements KeyListener {
         }
         if (jugadaLegal && puzzle.estaResuelto()) {            
             JOptionPane.showMessageDialog(tablero, "Has ganado!", "Info", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/resources/personas-aplaudiendo-stock.jpg"));
+            puzzle.setJugable(false);
         }
     }
 

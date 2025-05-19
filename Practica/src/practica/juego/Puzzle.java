@@ -165,6 +165,10 @@ public class Puzzle {
         }
         return resuelto;
     }
+    
+    public void setJugable(boolean jugable) {
+        this.jugable = jugable;
+    }
 
     public int getXPuntoJugador() {
         return xPuntoJugador;
