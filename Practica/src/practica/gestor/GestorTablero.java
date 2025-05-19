@@ -6,6 +6,10 @@ package practica.gestor;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.IconUIResource;
 import practica.definicion.Movimiento;
 import practica.excepciones.ExcepcionMovimientoIlegal;
 import practica.gui.Tablero;
@@ -99,10 +103,8 @@ public class GestorTablero implements KeyListener {
             }
             default -> System.out.println("---> DEBUG: key pressed <SIN ASIGNAR>");
         }
-        if (jugadaLegal && puzzle.estaResuelto()) {
-            System.out.println("HAS GANADO");
-            
-            // pendiente de modificar mensaje dialog Joptiion
+        if (jugadaLegal && puzzle.estaResuelto()) {            
+            JOptionPane.showMessageDialog(tablero, "Has ganado!", "Info", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/resources/personas-aplaudiendo-stock.jpg"));
         }
     }
 

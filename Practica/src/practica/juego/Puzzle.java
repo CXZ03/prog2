@@ -22,6 +22,7 @@ public class Puzzle {
     private int numColumnas;
     private int xPuntoJugador;
     private int yPuntoJugador;
+    private boolean jugable;
 
     public Puzzle(Tablero tablero, int numColumnas, int numFilas) {
         this.tablero = tablero;
@@ -30,6 +31,7 @@ public class Puzzle {
         estadoPiezas = new int[numColumnas][numFilas];
         xPuntoJugador = 0;
         yPuntoJugador = 0;
+        jugable = true;
 
         inicializarEstadoPiezas();
         mezclarPiezas();
@@ -38,6 +40,7 @@ public class Puzzle {
     }
     
     public void resolver() {
+        jugable = false;
         xPuntoJugador = 0;
         yPuntoJugador = 0;
         inicializarEstadoPiezas();
@@ -46,6 +49,7 @@ public class Puzzle {
     }
     
     public void mezclar() {
+        jugable = true;
         xPuntoJugador = 0;
         yPuntoJugador = 0;
         inicializarEstadoPiezas();
@@ -100,6 +104,10 @@ public class Puzzle {
     }
 
     public void mover(Movimiento mov) throws ExcepcionMovimientoIlegal {
+        // Si no es jugable no hacemos el movimiento
+        if (!jugable) {
+            return;
+        }
         int xNueva = xPuntoJugador;
         int yNueva = yPuntoJugador;
         switch (mov) {
@@ -142,6 +150,10 @@ public class Puzzle {
     }
 
     public boolean estaResuelto() {
+        // Si no es jugable no puede ganar
+        if (!jugable) {
+            return false;
+        }
         int numActual = 0;
         boolean resuelto = true;
         for (int j = 0; (j < numFilas) && resuelto; j++) {
