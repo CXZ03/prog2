@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/Main.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Ventana.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/DialogoFormulario.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/FormularioPuzle.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gestor/GestorTablero.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gestor/GestorBarraMenu.java</file>
             <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/BarraMenuJuego.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gestor/GestorDialogoFormulario.java</file>
             <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Tablero.java</file>
-            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Pieza.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gestor/GestorTablero.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Ventana.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/juego/Puzzle.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/FormularioPuzle.java</file>
         </group>
     </open-files>
 </project-private>

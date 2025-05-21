@@ -14,46 +14,45 @@ import practica.gui.Tablero;
  * @author cxz03
  */
 public class Puzzle {
-    
+
     private Tablero tablero;
 
+    private String nombreJugador;
     private int[][] estadoPiezas;
     private int numFilas;
     private int numColumnas;
     private int xPuntoJugador;
     private int yPuntoJugador;
+    private int contadorPasos;
     private boolean jugable;
 
-    public Puzzle(Tablero tablero, int numColumnas, int numFilas) {
+    public Puzzle(Tablero tablero, int numColumnas, int numFilas, String nombreJugador) {
+        this.nombreJugador = nombreJugador;
         this.tablero = tablero;
         this.numColumnas = numColumnas;
         this.numFilas = numFilas;
         estadoPiezas = new int[numColumnas][numFilas];
-        xPuntoJugador = 0;
-        yPuntoJugador = 0;
-        jugable = true;
 
-        inicializarEstadoPiezas();
-        mezclarPiezas();
-        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
-        tablero.iniciarComponentes();
+        mezclar();
     }
-    
-    public void resolver() {
-        jugable = false;
-        xPuntoJugador = 0;
-        yPuntoJugador = 0;
-        inicializarEstadoPiezas();
-        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
-        tablero.iniciarComponentes();
-    }
-    
+
     public void mezclar() {
         jugable = true;
         xPuntoJugador = 0;
         yPuntoJugador = 0;
+        contadorPasos = 0;
         inicializarEstadoPiezas();
         mezclarPiezas();
+        tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
+        tablero.iniciarComponentes();
+    }
+
+    public void resolver() {
+        jugable = true;
+        xPuntoJugador = 0;
+        yPuntoJugador = 0;
+        contadorPasos = 0;
+        inicializarEstadoPiezas();
         tablero.iniciarPiezas(estadoPiezas, xPuntoJugador, yPuntoJugador, numColumnas, numFilas);
         tablero.iniciarComponentes();
     }
@@ -89,7 +88,7 @@ public class Puzzle {
             }
         }
     }
-    
+
     private boolean esPuntoJugador(int x, int y) {
         return (xPuntoJugador == x && yPuntoJugador == y);
     }
@@ -129,7 +128,7 @@ public class Puzzle {
                 }
                 yNueva++;
                 break;
-            
+
             case Movimiento.DERECHA:
                 if (xPuntoJugador >= numColumnas - 1) {
                     throw new ExcepcionMovimientoIlegal("Error: LogicaTablero.java -> moverHaciaDerecha -> xPuntoJugador >= numColumna - 1, no se puede mover hacia derecha");
@@ -137,10 +136,17 @@ public class Puzzle {
                 xNueva++;
                 break;
         }
+
+        // Actualizar la parte gráfica
         intercambiarPiezas(xPuntoJugador, yPuntoJugador, xNueva, yNueva);
         tablero.intercambiarPieza(xPuntoJugador, yPuntoJugador, xNueva, yNueva);
+
+        // Actualizar la posición
         xPuntoJugador = xNueva;
         yPuntoJugador = yNueva;
+
+        // Aumentar el contador de pasos
+        contadorPasos++;
     }
 
     private void intercambiarPiezas(int x1, int y1, int x2, int y2) {
@@ -165,9 +171,17 @@ public class Puzzle {
         }
         return resuelto;
     }
-    
+
     public void setJugable(boolean jugable) {
         this.jugable = jugable;
+    }
+
+    public int getNumFilas() {
+        return numFilas;
+    }
+
+    public int getNumColumnas() {
+        return numColumnas;
     }
 
     public int getXPuntoJugador() {
@@ -178,9 +192,16 @@ public class Puzzle {
         return yPuntoJugador;
     }
 
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public int getContadorPasos() {
+        return contadorPasos;
+    }
+
     public int[][] getEstadoPiezas() {
         return estadoPiezas;
     }
-    
-    
+
 }

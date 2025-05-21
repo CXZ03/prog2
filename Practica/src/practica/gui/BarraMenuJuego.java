@@ -7,13 +7,53 @@ import practica.gestor.GestorBarraMenu;
 
 public class BarraMenuJuego extends JMenuBar {
 
+    // Bloque de atributos del menu sobre juegos
     private JMenu menuJuego;
-    private JMenuItem botonSalir;
     private JMenuItem botonResolver;
     private JMenuItem botonMezclar;
+    private JMenuItem botonSalir;
+
+    // Bloque de atributos del menu para cambio de paneles
+    private JMenu menuNavegar;
+    private JMenuItem botonTablero;
+    private JMenuItem botonHistorial;
 
     public BarraMenuJuego() {
-        // Crear el munu "Juego"
+        inicializarMenuJuego();
+        inicializarMenuNavegar();
+    }
+
+    public void asignarGestorBarraMenu(GestorBarraMenu gestorBarraMenu) {
+        // Añadir los gestores de eventos a los botones
+        botonSalir.addActionListener(gestorBarraMenu);
+        botonResolver.addActionListener(gestorBarraMenu);
+        botonMezclar.addActionListener(gestorBarraMenu);
+        botonTablero.addActionListener(gestorBarraMenu);
+        botonHistorial.addActionListener(gestorBarraMenu);
+    }
+
+    public JMenuItem getBotonSalir() {
+        return botonSalir;
+    }
+
+    public JMenuItem getBotonResolver() {
+        return botonResolver;
+    }
+
+    public JMenuItem getBotonMezclar() {
+        return botonMezclar;
+    }
+
+    public JMenuItem getBotonTablero() {
+        return botonTablero;
+    }
+
+    public JMenuItem getBotonHistorial() {
+        return botonHistorial;
+    }
+
+    private void inicializarMenuJuego() {
+        // Crear el menu "Juego"
         menuJuego = new JMenu("Juego");
 
         // Crear los botones del menu "Juego"
@@ -29,24 +69,20 @@ public class BarraMenuJuego extends JMenuBar {
         // Añadir el menu "Juego" a la barra de menu
         add(menuJuego);
     }
-
-    public void asignarGestorBarraMenu(GestorBarraMenu gestorBarraMenu) {
-        // Añadir los gestores de eventos a los botones
-        botonSalir.addActionListener(gestorBarraMenu);
-        botonResolver.addActionListener(gestorBarraMenu);
-        botonMezclar.addActionListener(gestorBarraMenu);
+    
+    private void inicializarMenuNavegar() {
+        // Crear el menu "Navegar"
+        menuNavegar = new JMenu("Navegar");
+        
+        // Crear los botones del menu "Navegar"
+        botonTablero = new JMenuItem("Tablero");
+        botonHistorial = new JMenuItem("Historial");
+        
+        // Añadir los botones a menu "Navegar"
+        menuNavegar.add(botonTablero);
+        menuNavegar.add(botonHistorial);
+        
+        // Añadir el menu "Navegar" a la barra de menu
+        add(menuNavegar);
     }
-
-    public JMenuItem getBotonSalir() {
-        return botonSalir;
-    }
-
-    public JMenuItem getBotonResolver() {
-        return botonResolver;
-    }
-
-    public JMenuItem getBotonMezclar() {
-        return botonMezclar;
-    }
-
 }

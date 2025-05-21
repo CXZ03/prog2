@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import practica.gui.BarraMenuJuego;
+import practica.gui.Ventana;
 import practica.juego.Puzzle;
 
 /**
@@ -16,10 +17,12 @@ import practica.juego.Puzzle;
  */
 public class GestorBarraMenu implements ActionListener {
 
+    private Ventana ventana;
     private BarraMenuJuego barraMenu;
     private Puzzle puzzle;
 
-    public GestorBarraMenu(BarraMenuJuego barraMenu, Puzzle puzzle) {
+    public GestorBarraMenu(Ventana ventana, BarraMenuJuego barraMenu, Puzzle puzzle) {
+        this.ventana = ventana;
         this.barraMenu = barraMenu;
         this.barraMenu.asignarGestorBarraMenu(this);
         this.puzzle = puzzle;
@@ -35,6 +38,12 @@ public class GestorBarraMenu implements ActionListener {
             puzzle.mezclar();
         } else if (source == barraMenu.getBotonSalir()) {
             System.exit(0);
+        } else if (source == barraMenu.getBotonTablero()) {
+            ventana.cambiarPanel(Ventana.PANEL_JUEGO);
+            ventana.getTablero().requestFocus();
+        } else if (source == barraMenu.getBotonHistorial()) {
+            ventana.cambiarPanel(Ventana.PANEL_HISTORIAL);
+            ventana.actualizarHistorial();
         }
     }
 }
