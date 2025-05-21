@@ -25,80 +25,76 @@ import practica.historial.EscritorFicheroHistorial;
 import practica.historial.RegistroPartida;
 
 /**
+ * Gestiona los eventos asociados al tablero del rompecabezas. Detecta las
+ * teclas presionadas, actualiza el estado del juego y guarda los datos del
+ * historial cuando el rompecabezas es resuelto.
  *
- * @author cxz03
+ * Implementa KeyListener para manejar eventos de teclado.
  */
 public class GestorTablero implements KeyListener {
-    
-    private Tablero tablero;
-    private Puzzle puzzle;
-    
+
+    private Tablero tablero; // El tablero gráfico del rompecabezas
+    private Puzzle puzzle; // Lógica del rompecabezas
+
+    /**
+     * Constructor que inicializa el gestor del tablero.
+     *
+     * @param tablero El tablero gráfico del rompecabezas.
+     * @param puzzle La lógica del rompecabezas.
+     */
     public GestorTablero(Tablero tablero, Puzzle puzzle) {
         this.tablero = tablero;
         iniciarTablero();
         this.puzzle = puzzle;
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
+        // No se utiliza en este caso
     }
-    
+
     @Override
     public void keyPressed(KeyEvent e) {
+        // Gestionar la tecla presionada y determinar el movimiento
         gestionarTeclaPresionada(Movimiento.obtenerMovimiento(e.getKeyChar()));
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
+        // No se utiliza en este caso
     }
-    
+
+    /**
+     * Configura el tablero para escuchar eventos de teclado.
+     */
     private void iniciarTablero() {
         tablero.addKeyListener(this);
         tablero.setFocusable(true);
         tablero.requestFocus();
     }
-    
-    private void gestionarTeclaW() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
-        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
-        puzzle.mover(Movimiento.ARRIBA);
-    }
-    
-    private void gestionarTeclaA() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
-        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
-        puzzle.mover(Movimiento.IZQUIERDA);
-    }
-    
-    private void gestionarTeclaS() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
-        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
-        puzzle.mover(Movimiento.ABAJO);
-    }
-    
-    private void gestionarTeclaD() throws ExcepcionMovimientoIlegal {
-        int xPuntoJugadorOrigen = puzzle.getXPuntoJugador();
-        int yPuntoJugadorOrigen = puzzle.getYPuntoJugador();
-        puzzle.mover(Movimiento.DERECHA);
-    }
-    
+
+    /**
+     * Gestiona la tecla presionada y ejecuta el movimiento correspondiente.
+     *
+     * @param mov El movimiento asociado a la tecla presionada.
+     */
     private void gestionarTeclaPresionada(Movimiento mov) {
-        boolean jugadaLegal = true;
+        boolean jugadaLegal = true; // Flag por si hay alguna jugada ilegal
+
         switch (mov) {
             case Movimiento.ARRIBA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'w'" + ColorConsola.REINICIAR);
                 try {
-                    this.gestionarTeclaW();
+                    gestionarTeclaW();
                 } catch (ExcepcionMovimientoIlegal ex) {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
                 }
             }
-            
             case Movimiento.IZQUIERDA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'a'" + ColorConsola.REINICIAR);
                 try {
-                    this.gestionarTeclaA();
+                    gestionarTeclaA();
                 } catch (ExcepcionMovimientoIlegal ex) {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
@@ -107,7 +103,7 @@ public class GestorTablero implements KeyListener {
             case Movimiento.ABAJO -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 's'" + ColorConsola.REINICIAR);
                 try {
-                    this.gestionarTeclaS();
+                    gestionarTeclaS();
                 } catch (ExcepcionMovimientoIlegal ex) {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
@@ -116,7 +112,7 @@ public class GestorTablero implements KeyListener {
             case Movimiento.DERECHA -> {
                 System.out.println(ColorConsola.AMARILLO + "---> DEBUG: key pressed 'd'" + ColorConsola.REINICIAR);
                 try {
-                    this.gestionarTeclaD();
+                    gestionarTeclaD();
                 } catch (ExcepcionMovimientoIlegal ex) {
                     System.err.println(ex.getMessage());
                     jugadaLegal = false;
@@ -125,38 +121,59 @@ public class GestorTablero implements KeyListener {
             default ->
                 System.out.println("---> DEBUG: key pressed <SIN ASIGNAR>");
         }
+
+        // Si el movimiento es legal y el rompecabezas está resuelto, manejar la victoria
         if (jugadaLegal && puzzle.estaResuelto()) {
-            JOptionPane.showMessageDialog(tablero, "Has ganado!", "Info", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/resources/personas-aplaudiendo-stock.jpg"));
+            // Enseñamos el mensaje de felicitación
+            JOptionPane.showMessageDialog(tablero, "¡Has ganado!", "Info", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/resources/personas-aplaudiendo-stock.jpg"));
 
-            // Reiniciamos el juego
-            puzzle.mezclar();
-
-            // Guardamos la partida en el fichero historial
-            RegistroPartida partidaAGuardar = new RegistroPartida(
+            // Guardar la partida en el historial
+            guardarPartida(new RegistroPartida(
                     puzzle.getContadorPasos(),
                     puzzle.getNumColumnas(),
                     puzzle.getNumFilas(),
                     puzzle.getNombreJugador(),
                     LocalDateTime.now().toString()
-            );
-            
-            guardarPartida(partidaAGuardar);
-            
+            ));
+
+            // Reiniciar el estado del juego
+            puzzle.resolver();
         }
     }
-    
+
+    /**
+     * Guarda los datos de la partida en el historial.
+     *
+     * @param partidaAGuardar Los datos de la partida a guardar.
+     */
     private void guardarPartida(RegistroPartida partidaAGuardar) {
         File ficheroHistorial = new File(PanelHistorial.RUTA_HISTORIAL);
-        
         boolean concatenar = ficheroHistorial.exists() && (ficheroHistorial.length() > 0);
-        
-        System.out.println("fichero: " + concatenar);
-        System.out.println("longitud: " + ficheroHistorial.length());
-        // No hace falta hacer close() al EscritorFicheroHistorial porque es un AutoCloseable y los cierra automaticamente si lo declaramos en los parentesis del try-catch 
-        try (FileOutputStream fos = new FileOutputStream(ficheroHistorial, concatenar); EscritorFicheroHistorial escritorFicheroHistorial = concatenar ? new EscritorConcatenadoFicheroHistorial(fos) : new EscritorFicheroHistorial(fos);) {
+
+        // Guardar la partida en el fichero
+        try (FileOutputStream fos = new FileOutputStream(ficheroHistorial, concatenar); EscritorFicheroHistorial escritorFicheroHistorial = concatenar
+                ? new EscritorConcatenadoFicheroHistorial(fos)
+                : new EscritorFicheroHistorial(fos)) {
             escritorFicheroHistorial.escribirPartida(partidaAGuardar);
         } catch (IOException ex) {
             Logger.getLogger(GestorTablero.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // Métodos para gestionar movimientos específicos
+    private void gestionarTeclaW() throws ExcepcionMovimientoIlegal {
+        puzzle.mover(Movimiento.ARRIBA);
+    }
+
+    private void gestionarTeclaA() throws ExcepcionMovimientoIlegal {
+        puzzle.mover(Movimiento.IZQUIERDA);
+    }
+
+    private void gestionarTeclaS() throws ExcepcionMovimientoIlegal {
+        puzzle.mover(Movimiento.ABAJO);
+    }
+
+    private void gestionarTeclaD() throws ExcepcionMovimientoIlegal {
+        puzzle.mover(Movimiento.DERECHA);
     }
 }

@@ -10,26 +10,40 @@ import practica.gui.DialogoFormulario;
 import practica.gui.FormularioPuzle;
 
 /**
- * Clase donde se encarga de manejar los eventos de la Clase DialogoFormualrio
- * 
- * @author cxz03
+ * Clase que gestiona los eventos del DialogoFormulario. Se encarga de validar
+ * los datos ingresados en el formulario y cerrar el cuadro de diálogo si los
+ * datos son correctos.
+ *
+ * Implementa ActionListener para manejar eventos de acción.
  */
 public class GestorDialogoFormulario implements ActionListener {
-    
+
     private DialogoFormulario dialogoFormulario;
 
+    /**
+     * Constructor que inicializa el gestor con el diálogo asociado.
+     *
+     * @param dialogoFormulario El diálogo que será gestionado.
+     */
     public GestorDialogoFormulario(DialogoFormulario dialogoFormulario) {
         this.dialogoFormulario = dialogoFormulario;
     }
-    
+
+    /**
+     * Maneja el evento de acción generado por el botón de aceptar en el
+     * diálogo.
+     *
+     * @param e El evento de acción que se ha disparado.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         FormularioPuzle formulario = dialogoFormulario.getFormulario();
-        
-        // Si el formato del formulario esta correcto cerramos el dialogo y cambiamos el flag de aceptado a true
+
+        // Verificar que los datos del formulario son válidos
         if (formulario.verificarNumeros() && formulario.verificarNombre()) {
-                dialogoFormulario.aceptar(true);
-                dialogoFormulario.dispose();
-            }
+            // Si los datos son correctos, marcar el formulario como aceptado y cerrar el diálogo
+            dialogoFormulario.aceptar(true);
+            dialogoFormulario.dispose();
+        }
     }
 }

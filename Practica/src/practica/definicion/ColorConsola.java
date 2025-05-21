@@ -5,8 +5,10 @@
 package practica.definicion;
 
 /**
+ * Representa los códigos de color ANSI para formatear texto en la consola.
  *
- * @author cxz03
+ * Cada color tiene un código ANSI asociado que se puede usar para cambiar el
+ * color del texto en la salida de la consola.
  */
 public enum ColorConsola {
     REINICIAR("\u001B[0m"),
@@ -19,12 +21,22 @@ public enum ColorConsola {
     CIAN("\u001B[36m"),
     BLANCO("\u001B[37m");
 
-    private final String code;
+    private final String code; // Código ANSI del color
 
+    /**
+     * Constructor que asigna el código ANSI al color.
+     *
+     * @param code El código ANSI asociado al color.
+     */
     ColorConsola(String code) {
         this.code = code;
     }
 
+    /**
+     * Retorna el código ANSI del color como una cadena.
+     *
+     * @return El código ANSI como una cadena de texto.
+     */
     @Override
     public String toString() {
         return code;

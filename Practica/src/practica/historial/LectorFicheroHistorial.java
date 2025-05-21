@@ -11,45 +11,64 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- *
- * @author cxz03
+ * Esta clase extiende de ObjectInputStream para leer objetos de un archivo
+ * que contiene un historial de partidas. Proporciona un método para leer 
+ * y construir un historial completo de todas las partidas almacenadas en el archivo.
  */
 public class LectorFicheroHistorial extends ObjectInputStream {
 
+    /**
+     * Constructor que inicializa el flujo de entrada a partir de la ruta del fichero.
+     *
+     * @param rutaFichero La ruta del fichero desde donde se leerán los objetos.
+     * @throws FileNotFoundException Si el fichero especificado no se encuentra.
+     * @throws IOException Si ocurre un error al abrir o leer el flujo.
+     */
     public LectorFicheroHistorial(String rutaFichero) throws FileNotFoundException, IOException {
         super(new FileInputStream(rutaFichero));
     }
 
+    /**
+     * Lee todos los objetos del archivo y construye un historial completo 
+     * en formato de texto. Cada partida se representa con información relevante 
+     * como el nombre del jugador, las dimensiones del juego, el número de pasos 
+     * y la fecha en que se jugó.
+     *
+     * @return Una cadena de texto que contiene el historial completo de partidas.
+     * @throws IOException Si ocurre un error al leer del flujo.
+     * @throws ClassNotFoundException Si algún objeto leído no puede ser deserializado.
+     */
     public String leerTodo() throws IOException, ClassNotFoundException {
-        // Inicializamos un text vacio para escribir el historial
+        // Inicializamos un texto vacío para almacenar el historial completo
         String historialCompleto = "";
 
         try {
-            // Contador para saber el numero de la partida actual
+            // Contador para identificar el número de la partida actual
             int numeroPartida = 1;
 
-            // Leemos el primer objeto
+            // Variable para almacenar el objeto actualmente leído del archivo
             RegistroPartida actualRegistroPartida;
 
-            // Leemos hasta el final del fichero
+            // Bucle para leer objetos hasta que se alcance el final del archivo
             while (true) {
-                // Leemos el objeto
+                // Leemos un objeto del flujo y lo convertimos en RegistroPartida
                 actualRegistroPartida = (RegistroPartida) readObject();
                 
-                // Construirmos el texto del historial con el objeto leido
+                // Construimos el historial con los detalles de la partida actual
                 historialCompleto += "Partida " + numeroPartida + "\n";
                 historialCompleto += "\tNombre del jugador: " + actualRegistroPartida.getNombreJugador() + "\n";
                 historialCompleto += "\tDimensión: " + actualRegistroPartida.getNumeroColumnas() + " x " + actualRegistroPartida.getNumeroFilas() + "\n";
                 historialCompleto += "\tNúmero de pasos: " + actualRegistroPartida.getNumeroPasos() + "\n";
                 historialCompleto += "\tFecha jugada: " + actualRegistroPartida.getDatePlayed() + "\n";
                 
-                // Aumentamos el indece del objeto leido
+                // Aumentamos el índice para la siguiente partida
                 numeroPartida++;
             }
         } catch (EOFException e) {
-            // Se ha llegado al final de fichero, salimos del bucle
+            // Se ha llegado al final del fichero, se interrumpe el bucle
         }
 
+        // Retornamos el historial completo en formato de texto
         return historialCompleto;
     }
 }
