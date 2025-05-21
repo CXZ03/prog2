@@ -13,8 +13,6 @@ import practica.gui.Tablero;
  * Representa la lógica principal de un juego de rompecabezas (Puzzle). 
  * Administra el estado del tablero, la posición del jugador, las piezas y 
  * las operaciones necesarias para mezclar, mover y resolver el rompecabezas.
- * 
- * @author cxz03
  */
 public class Puzzle {
 
