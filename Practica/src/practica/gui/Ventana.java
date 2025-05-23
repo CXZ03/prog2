@@ -36,7 +36,7 @@ public class Ventana extends JFrame {
      */
     public Ventana() {
         // Lanzar el formulario para obtener los parámetros de la partida
-        FormularioPuzle formularioResultado = lanzarFormulario();
+        DialogoFormulario formularioResultado = lanzarFormulario();
 
         // Obtenemos la cantidad de columnas, filas y el nombre del jugador para crear la partida
         int numeroColumnas = formularioResultado.getNumeroColumnas();
@@ -115,7 +115,7 @@ public class Ventana extends JFrame {
      *
      * @return FormularioPuzle con los datos ingresados por el usuario.
      */
-    private FormularioPuzle lanzarFormulario() {
+    private DialogoFormulario lanzarFormulario() {
         DialogoFormulario dialogo = new DialogoFormulario(this);
         dialogo.setVisible(true);
 
@@ -125,6 +125,6 @@ public class Ventana extends JFrame {
             System.exit(0);
         }
 
-        return dialogo.getFormulario();
+        return dialogo;
     }
 }

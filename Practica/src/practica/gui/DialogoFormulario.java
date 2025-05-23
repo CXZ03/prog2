@@ -5,10 +5,15 @@
 package practica.gui;
 
 import java.awt.BorderLayout;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import practica.gestor.GestorDialogoFormulario;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Representa un cuadro de diálogo modal que contiene un formulario para
@@ -20,9 +25,18 @@ import practica.gestor.GestorDialogoFormulario;
  */
 public class DialogoFormulario extends JDialog {
 
+    // Dimensiones de la ventana
+    private static final int ANCHO_VENTANA = 400; // Ancho predeterminado
+    private static final int ALTO_VENTANA = 300; // Alto predeterminado
+    private static final int ESPACIADO = 10; // Espaciado entre componentes
     private static final String TITULO = "CONFIGURACIÓN DE LA PARTIDA";
-    private FormularioPuzle formulario; // Formulario para ingresar los parámetros de la partida
     private boolean aceptado = false; // Flag para si el usuario aceptó el formulario
+
+    // Componentes del formulario
+    private JPanel formulario; // Formulario para ingresar los parámetros de la partida
+    private JTextField campoFilas; // Campo para el número de filas
+    private JTextField campoColumnas; // Campo para el número de columnas
+    private JTextField campoNombreJugador; // Campo para el nombre del jugador
 
     /**
      * Constructor que inicializa el cuadro de diálogo con un formulario y un
@@ -39,12 +53,18 @@ public class DialogoFormulario extends JDialog {
         this.setLayout(new BorderLayout());
 
         // Crear el formulario y colocarlo en el centro del diálogo
-        formulario = new FormularioPuzle();
-        this.add(formulario, BorderLayout.CENTER);
-
+        inicializarFormulario();
+        
         // Crear el botón "Aceptar" y añadir un gestor de eventos
         JButton botonAceptar = new JButton("Aceptar");
-        botonAceptar.addActionListener(new GestorDialogoFormulario(this));
+        botonAceptar.addActionListener(e -> {
+            // Verificar que los datos del formulario son válidos
+            if (verificarNumeros() && verificarNombre()) {
+                // Si los datos son correctos, marcar el formulario como aceptado y cerrar el diálogo
+                aceptado = true;
+                dispose();
+            }
+        });
         this.add(botonAceptar, BorderLayout.SOUTH);
 
         // Ajustar el tamaño del diálogo y colocarlo centrado respecto a la ventana padre
@@ -71,13 +91,115 @@ public class DialogoFormulario extends JDialog {
         return aceptado;
     }
 
+    private void inicializarFormulario() {
+        // Inicializamos el formualrio
+        formulario = new JPanel();
+        formulario.setLayout(new BoxLayout(formulario, BoxLayout.Y_AXIS));
+
+        // Etiqueta y campo para el nombre del jugador
+        JLabel etiquetaNombreJugador = new JLabel("Nombre del jugador:");
+        campoNombreJugador = new JTextField(10);
+
+        // Etiqueta y campo para el número de filas
+        JLabel etiquetaFilas = new JLabel("Número de filas:");
+        campoFilas = new JTextField(10);
+
+        // Etiqueta y campo para el número de columnas
+        JLabel etiquetaColumnas = new JLabel("Número de columnas:");
+        campoColumnas = new JTextField(10);
+
+        // Añadir elementos al panel con espaciado
+        formulario.add(etiquetaNombreJugador);
+        formulario.add(campoNombreJugador);
+        formulario.add(Box.createVerticalStrut(ESPACIADO));
+        formulario.add(etiquetaFilas);
+        formulario.add(campoFilas);
+        formulario.add(Box.createVerticalStrut(ESPACIADO));
+        formulario.add(etiquetaColumnas);
+        formulario.add(campoColumnas);
+        formulario.add(Box.createVerticalStrut(ESPACIADO));
+
+        add(formulario, BorderLayout.CENTER);
+
+    }
+
     /**
-     * Obtiene el formulario que contiene los parámetros de configuración de la
-     * partida.
+     * Verifica si el campo del nombre del jugador tiene contenido y si comienza
+     * con una letra mayúscula. Muestra mensajes de error o advertencia según el
+     * caso.
      *
-     * @return Una instancia de FormularioPuzle.
+     * @return true si el nombre es válido, false en caso contrario.
      */
-    public FormularioPuzle getFormulario() {
-        return formulario;
+    public boolean verificarNombre() {
+        // quitamos los espacios en blanco que hay a la izquierda y derecha del nombre con trim()
+        String nombreJugador = campoNombreJugador.getText().trim();
+
+        if (nombreJugador.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay nombre del jugador.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!Character.isUpperCase(nombreJugador.charAt(0))) {
+            JOptionPane.showMessageDialog(this, "El nombre del jugador debe comenzar con una letra mayúscula.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Verifica si los valores ingresados en los campos de filas y columnas son
+     * números enteros.
+     *
+     * @return true si ambos valores son válidos, false en caso contrario.
+     */
+    public boolean verificarNumeros() {
+        try {
+            int filas = Integer.parseInt(campoFilas.getText());
+            int columnas = Integer.parseInt(campoColumnas.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene el número de filas ingresado en el formulario.
+     *
+     * @return El número de filas o -1 si no es un número válido.
+     */
+    public int getNumeroFilas() {
+        int res = -1;
+        try {
+            res = Integer.parseInt(campoFilas.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Formato erróneo de número de filas.");
+        }
+        return res;
+    }
+
+    /**
+     * Obtiene el número de columnas ingresado en el formulario.
+     *
+     * @return El número de columnas o -1 si no es un número válido.
+     */
+    public int getNumeroColumnas() {
+        int res = -1;
+        try {
+            res = Integer.parseInt(campoColumnas.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Formato erróneo de número de columnas.");
+        }
+        return res;
+    }
+
+    /**
+     * Obtiene el nombre del jugador ingresado en el formulario.
+     *
+     * @return El nombre del jugador como {@link String}.
+     */
+    public String getNombreJugador() {
+        return campoNombreJugador.getText();
     }
 }
