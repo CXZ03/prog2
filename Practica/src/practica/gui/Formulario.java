@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * Utiliza un FormularioPuzle para recopilar los parámetros de la partida y un
  * botón para aceptar los datos ingresados.
  */
-public class DialogoFormulario extends JDialog {
+public class Formulario extends JDialog {
 
     // Dimensiones de la ventana
     private static final int ANCHO_VENTANA = 400; // Ancho predeterminado
@@ -45,7 +45,7 @@ public class DialogoFormulario extends JDialog {
      * @param ventanaPadre La ventana principal desde la cual se lanza este
      * cuadro de diálogo.
      */
-    public DialogoFormulario(JFrame ventanaPadre) {
+    public Formulario(JFrame ventanaPadre) {
         // Modal a true para que bloquee las acciones de la ventana principal
         super(ventanaPadre, TITULO, true);
 

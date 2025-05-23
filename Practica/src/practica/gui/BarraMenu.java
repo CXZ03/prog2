@@ -13,7 +13,7 @@ import practica.gestor.GestorBarraMenu;
  * La barra de menú puede asignar un gestor de eventos que maneje las acciones
  * de los botones.
  */
-public class BarraMenuJuego extends JMenuBar {
+public class BarraMenu extends JMenuBar {
 
     // Bloque de atributos del menú sobre juegos
     private JMenu menuJuego;
@@ -29,7 +29,7 @@ public class BarraMenuJuego extends JMenuBar {
     /**
      * Constructor que inicializa los menús y sus elementos.
      */
-    public BarraMenuJuego() {
+    public BarraMenu() {
         inicializarMenuJuego();
         inicializarMenuNavegar();
     }

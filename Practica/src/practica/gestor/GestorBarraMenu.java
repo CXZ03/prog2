@@ -7,7 +7,7 @@ package practica.gestor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
-import practica.gui.BarraMenuJuego;
+import practica.gui.BarraMenu;
 import practica.gui.Ventana;
 import practica.juego.Puzzle;
 
@@ -21,7 +21,7 @@ import practica.juego.Puzzle;
 public class GestorBarraMenu implements ActionListener {
 
     private Ventana ventana; // La ventana principal del juego
-    private BarraMenuJuego barraMenu; // La barra de menú asociada
+    private BarraMenu barraMenu; // La barra de menú asociada
     private Puzzle puzzle; // La lógica del rompecabezas
 
     /**
@@ -32,7 +32,7 @@ public class GestorBarraMenu implements ActionListener {
      * @param barraMenu La barra de menú que será gestionada.
      * @param puzzle La lógica del rompecabezas.
      */
-    public GestorBarraMenu(Ventana ventana, BarraMenuJuego barraMenu, Puzzle puzzle) {
+    public GestorBarraMenu(Ventana ventana, BarraMenu barraMenu, Puzzle puzzle) {
         this.ventana = ventana;
         this.barraMenu = barraMenu;
         this.barraMenu.asignarGestorBarraMenu(this); // Asignar este gestor como listener de la barra de menú

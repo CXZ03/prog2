@@ -24,7 +24,7 @@ public class Ventana extends JFrame {
 
     private static final String TITULO = "ROMPECABEZAS";
 
-    private BarraMenuJuego barraMenu;
+    private BarraMenu barraMenu;
     private Tablero tablero;
     private PanelHistorial panelHistorial;
     private CardLayout cardLayout;
@@ -36,7 +36,7 @@ public class Ventana extends JFrame {
      */
     public Ventana() {
         // Lanzar el formulario para obtener los parámetros de la partida
-        DialogoFormulario formularioResultado = lanzarFormulario();
+        Formulario formularioResultado = lanzarFormulario();
 
         // Obtenemos la cantidad de columnas, filas y el nombre del jugador para crear la partida
         int numeroColumnas = formularioResultado.getNumeroColumnas();
@@ -49,7 +49,7 @@ public class Ventana extends JFrame {
         GestorTablero gestorTablero = new GestorTablero(tablero, logicaTablero);
 
         // Añadimos el menú y su gestor
-        barraMenu = new BarraMenuJuego();
+        barraMenu = new BarraMenu();
         GestorBarraMenu gestorBarraMenu = new GestorBarraMenu(this, barraMenu, logicaTablero);
 
         // Inicializamos el panel del historial
@@ -115,8 +115,8 @@ public class Ventana extends JFrame {
      *
      * @return FormularioPuzle con los datos ingresados por el usuario.
      */
-    private DialogoFormulario lanzarFormulario() {
-        DialogoFormulario dialogo = new DialogoFormulario(this);
+    private Formulario lanzarFormulario() {
+        Formulario dialogo = new Formulario(this);
         dialogo.setVisible(true);
 
         // Verificar si el usuario aceptó el formulario
