@@ -54,7 +54,7 @@ public class Formulario extends JDialog {
 
         // Crear el formulario y colocarlo en el centro del diálogo
         inicializarFormulario();
-        
+
         // Crear el botón "Aceptar" y añadir un gestor de eventos
         JButton botonAceptar = new JButton("Aceptar");
         botonAceptar.addActionListener(e -> {
