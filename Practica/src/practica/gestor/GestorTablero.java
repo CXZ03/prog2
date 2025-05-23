@@ -56,7 +56,7 @@ public class GestorTablero implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         // Gestionar la tecla presionada y determinar el movimiento
-        gestionarTeclaPresionada(Movimiento.obtenerMovimiento(e.getKeyChar()));
+        gestionarTeclaPresionada(Movimiento.obtenerMovimiento(e.getKeyCode()));
     }
 
     @Override
@@ -79,6 +79,11 @@ public class GestorTablero implements KeyListener {
      * @param mov El movimiento asociado a la tecla presionada.
      */
     private void gestionarTeclaPresionada(Movimiento mov) {
+        // Miramos si es un movimiento válidoĺ
+        if (mov == null) {
+            return;
+        }
+        
         boolean jugadaLegal = true; // Flag por si hay alguna jugada ilegal
 
         switch (mov) {
