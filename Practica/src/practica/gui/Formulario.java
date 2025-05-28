@@ -157,6 +157,7 @@ public class Formulario extends JDialog {
         try {
             int filas = Integer.parseInt(campoFilas.getText());
             int columnas = Integer.parseInt(campoColumnas.getText());
+            // Mirar si el tablero es almenos de 3x3 (el 2x2 hay casos donde es insoluble porque estas en bucle y no tienes espacio para maniobrar)
             if (filas < 3 || columnas < 3) {
                 JOptionPane.showMessageDialog(this, "El tablero tiene que ser almenos 3x3.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
