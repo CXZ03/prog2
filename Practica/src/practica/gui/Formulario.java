@@ -157,6 +157,10 @@ public class Formulario extends JDialog {
         try {
             int filas = Integer.parseInt(campoFilas.getText());
             int columnas = Integer.parseInt(campoColumnas.getText());
+            if (filas < 3 || columnas < 3) {
+                JOptionPane.showMessageDialog(this, "El tablero tiene que ser almenos 3x3.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
             return true;
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingresa números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
