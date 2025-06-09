@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/Main.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Ventana.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/juego/Puzzle.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gui/Tablero.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/gestor/GestorTablero.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/historial/EscritorConcatenadoFicheroHistorial.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/historial/EscritorFicheroHistorial.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/historial/RegistroPartida.java</file>
+            <file>file:/home/cxz03/Documents/code/UIB/PROG2/PROG2/Practica/src/practica/historial/LectorFicheroHistorial.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -1,3 +1,5 @@
+// Autores: David González Lastra y Xiaozhe Cheng
+
 package practica.gui;
 
 import javax.swing.JMenu;
